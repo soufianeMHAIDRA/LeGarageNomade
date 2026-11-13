@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Garage Nomade – Bientôt à Toulouse</title>
+  <meta name="description" content="Le Garage Nomade, l'atelier de réparation automobile mobile à Toulouse. Bientôt disponible – inscrivez-vous pour être prévenu du lancement.">
+  <meta name="theme-color" content="#14363a">
+  <meta property="og:title" content="Le Garage Nomade – Bientôt à Toulouse">
+  <meta property="og:description" content="L'atelier de réparation automobile qui vient à vous.">
+  <meta property="og:image" content="img/toulouse-pixel.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <canvas id="scene" width="320" height="180" role="img"
+              aria-label="Scène en pixel art : le camion-atelier du Garage Nomade arrive sur les quais de la Garonne à Toulouse au coucher du soleil, devant le Pont Neuf, le dôme de la Grave et le clocher de Saint-Sernin. Le mécanicien sort avec sa caisse à outils."></canvas>
+      <noscript><img src="img/toulouse-pixel.png" width="960" height="540" alt="Le camion-atelier du Garage Nomade sur les quais de Toulouse, en pixel art."></noscript>
+      <button type="button" id="game-start" class="game-start" hidden>&#9654; Jouer</button>
+      <div id="game-hud" class="game-hud" hidden>
+        <span>Pièces <b id="game-score">0</b></span>
+        <span id="game-hint" class="game-hint">Flèches &#8592; &#8593; &#8594; &#8595; pour ramasser les pièces</span>
+        <span>Temps <b id="game-time">40</b></span>
+      </div>
+      <div id="game-over" class="game-over" role="dialog" aria-labelledby="game-over-title" hidden>
+        <p id="game-over-title" class="game-over-title">Temps écoulé !</p>
+        <p id="game-result" aria-live="polite"></p>
+        <div class="game-over-actions">
+          <button type="button" id="game-again">Rejouer</button>
+          <button type="button" id="game-quit">Quitter</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="dialog">
+      <h1>Le Garage <span>Nomade</span></h1>
+      <p class="tagline">L'atelier de réparation automobile qui vient à vous.</p>
+
+      <p class="badge"><span class="blink">&#9654;</span> Bientôt disponible à Toulouse</p>
+
+      <p class="message">
+        Notre camion-atelier fait le plein d'outils&nbsp;! Entretien, diagnostic et
+        réparations directement chez vous ou sur votre lieu de travail, partout
+        dans Toulouse et ses environs.
+        Laissez-nous votre e-mail pour être prévenu dès le lancement.
+      </p>
+
+      <!-- Replace the action URL with your Brevo form URL (Brevo > Contacts > Forms > Share > HTML code) -->
+      <form id="notify-form" class="notify" action="https://4176a218.sibforms.com/serve/MUIFAEqRIsO0yKpeB2sbnvMqSyZBLLSLbT57BadEpL6YkFKoOU98kPmoIPSk8-qc7wjQvSeBkjXFXO-rYsE3dNe6j5P5bMYXVlRELml64UfP-1ghQS5uCf4PNzRwFID4BEfyGZbLBTY5hQDaORvHutbFEpi8V_VBss8MUmMV9C4kC5DQs5D005JBRK8RSXvQ-iOaTLkqRbrQ8LffDg==" method="post" novalidate>
+        <label for="email" class="sr-only">Adresse e-mail</label>
+        <input type="email" id="email" name="EMAIL" placeholder="votre@email.fr" autocomplete="email" required>
+        <!-- Brevo's honeypot anti-spam field, hidden from humans -->
+        <input type="text" name="email_address_check" value="" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="locale" value="fr">
+        <button type="submit">Me prévenir</button>
+      </form>
+      <p id="form-status" class="status" role="status" aria-live="polite"></p>
+
+      <p class="privacy">Votre adresse est conservée par notre prestataire Brevo et uniquement utilisée pour vous informer du lancement. Désinscription possible à tout moment.</p>
+    </main>
+
+    <footer>&copy; <span id="year">2026</span> Le Garage Nomade &middot; Toulouse</footer>
+  </div>
+
+  <script src="scene.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

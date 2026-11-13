@@ -717,6 +717,7 @@
     ui.hint.hidden = false;
     ui.score.textContent = '0';
     ui.time.textContent = String(GAME_TIME);
+    hero.classList.add('is-playing');
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     canvas.parentElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     ensureLoop();
@@ -724,6 +725,7 @@
 
   function endGame() {
     game.state = 'over';
+    releasePad();
     var record = readRecord(), isNew = game.score > record;
     if (isNew) saveRecord(game.score);
     ui.result.textContent = 'Pièces ramassées : ' + game.score + ' — ' +
@@ -736,6 +738,7 @@
   function quitGame() {
     game.state = 'off';
     game.parts = [];
+    releasePad();
     ui.over.hidden = true;
     ui.hud.hidden = true;
     ui.start.hidden = false;
@@ -848,12 +851,43 @@
   canvas.addEventListener('pointerdown', function (e) {
     if (game.state !== 'play') return;
     game.target = toLogical(e);
-    canvas.setPointerCapture(e.pointerId);
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* pointer already released */ }
     e.preventDefault();
   });
   canvas.addEventListener('pointermove', function (e) { if (game.target) game.target = toLogical(e); });
   ['pointerup', 'pointercancel'].forEach(function (n) {
     canvas.addEventListener(n, function () { game.target = null; });
+  });
+
+  var hero = canvas.parentElement;
+  var padButtons = Array.prototype.slice.call(document.querySelectorAll('#game-pad button'));
+
+  function releasePad() {
+    game.keys = {};
+    game.target = null;
+    hero.classList.remove('is-playing');
+    padButtons.forEach(function (b) { b.classList.remove('is-down'); });
+  }
+
+  // Hold-to-move touch buttons; they feed the same key state as the keyboard arrows.
+  padButtons.forEach(function (b) {
+    var key = b.getAttribute('data-key');
+    function press(e) {
+      e.preventDefault();
+      if (game.state !== 'play') return;
+      game.keys[key] = true;
+      b.classList.add('is-down');
+      if (e.pointerId !== undefined && b.setPointerCapture) {
+        try { b.setPointerCapture(e.pointerId); } catch (err) { /* pointer already released */ }
+      }
+    }
+    function release() {
+      game.keys[key] = false;
+      b.classList.remove('is-down');
+    }
+    b.addEventListener('pointerdown', press);
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (n) { b.addEventListener(n, release); });
+    b.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   });
 
   if (ui.start) {

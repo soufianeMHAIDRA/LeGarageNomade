@@ -270,6 +270,142 @@ footer {
 
 [hidden] { display: none !important; }
 
+/* ---------- contact pop-up ---------- */
+.contact-cta {
+  margin: 1.25rem 0 0;
+  padding-top: 1rem;
+  border-top: 2px dashed rgba(246, 234, 210, 0.25);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  font-family: var(--ui-font);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.btn-primary {
+  color: var(--ink);
+  background: var(--mustard);
+  box-shadow: var(--pixel-border), inset 0 calc(var(--px) * -1) 0 0 var(--mustard-dark);
+}
+.btn-primary:hover { background: #ffd447; }
+.btn-secondary {
+  color: var(--cream);
+  background: var(--teal);
+  box-shadow: var(--pixel-border), inset 0 calc(var(--px) * -1) 0 0 #12525a;
+}
+.btn-secondary:hover { background: #2a9096; }
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible { outline: var(--px) dashed var(--cream); outline-offset: calc(var(--px) * 2); }
+.btn-primary:disabled { opacity: 0.6; cursor: wait; }
+
+.modal {
+  width: min(92vw, 540px);
+  max-height: 92vh;
+  padding: 1.5rem 1.5rem 1.25rem;
+  color: var(--cream);
+  background: var(--teal-dark);
+  border: var(--px) solid var(--cream);
+  outline: var(--px) solid var(--ink);
+  box-shadow: calc(var(--px) * 3) calc(var(--px) * 3) 0 0 rgba(0, 0, 0, 0.5);
+  font-family: var(--text-font);
+  font-size: 1.3rem;
+}
+.modal::backdrop { background: rgba(11, 20, 22, 0.75); }
+
+.modal h2 {
+  margin: 0;
+  text-align: center;
+  font-family: var(--pixel-font);
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  line-height: 1.4;
+  color: var(--mustard);
+  text-shadow: 3px 3px 0 var(--ink);
+}
+.modal-intro { margin: 0.75rem 0 1rem; text-align: center; line-height: 1.2; }
+
+.field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; flex: 1 1 200px; min-width: 0; }
+.field-row { display: flex; flex-wrap: wrap; gap: 0 1rem; }
+.field label { font-family: var(--ui-font); font-weight: 600; font-size: 1rem; letter-spacing: 0.5px; }
+.optional { font-weight: 400; color: #9fc4c4; }
+
+.field input,
+.field textarea {
+  width: 100%;
+  margin: 0 var(--px);
+  max-width: calc(100% - var(--px) * 2);
+  padding: 0.5rem 0.7rem;
+  font-family: var(--text-font);
+  font-size: 1.35rem;
+  color: var(--ink);
+  background: var(--cream);
+  border: none;
+  border-radius: 0;
+  box-shadow: var(--pixel-border), inset var(--px) var(--px) 0 0 #c9b893;
+}
+.field textarea { resize: vertical; min-height: 6.5rem; line-height: 1.15; }
+.field input:focus,
+.field textarea:focus { outline: var(--px) solid var(--mustard); outline-offset: var(--px); background: #fff8e8; }
+
+.modal .status { margin: 0 0 0.75rem; min-height: 2.4em; line-height: 1.2; text-align: center; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 1rem; flex-wrap: wrap; }
+.modal .privacy { text-align: center; margin-top: 1rem; }
+
+@media (max-width: 600px) {
+  .modal { padding: 1.1rem 0.9rem 1rem; }
+  .modal-actions { justify-content: stretch; }
+  .modal-actions button { flex: 1 1 auto; }
+}
+
+/* Touch controls: only on touch screens, only while a game is running */
+.game-pad {
+  display: none;
+  justify-content: space-between;
+  padding: calc(var(--px) * 2) calc(var(--px) * 2) var(--px);
+}
+.pad-group { display: flex; gap: calc(var(--px) * 3); }
+.game-pad button {
+  width: 3.4rem;
+  height: 3rem;
+  font-size: 1.3rem;
+  color: var(--ink);
+  background: var(--mustard);
+  border: none;
+  border-radius: 0;
+  box-shadow: var(--pixel-border), inset 0 calc(var(--px) * -1) 0 0 var(--mustard-dark);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.game-pad button.is-down {
+  background: #ffd447;
+  transform: translateY(2px);
+  box-shadow: var(--pixel-border), inset 0 var(--px) 0 0 var(--mustard-dark);
+}
+.hero.is-playing canvas {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (pointer: coarse) {
+  .hero.is-playing .game-pad { display: flex; }
+  .hero.is-playing + .dialog { margin-top: 1rem; }
+}
+
 @media (max-width: 600px) {
   .game-hud { font-size: 0.85rem; }
   .game-hint { display: none; }
